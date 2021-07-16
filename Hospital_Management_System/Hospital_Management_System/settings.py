@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hospitalapp'
+    'hospitalapp',
+    'rest_framework' ,
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+REST_FRAMEWORK ={
+    'DEFAULT_AUTHENTICATION':[
+    'rest_framework_jwt.authentication.JsonWebTokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES':{
+    'rest_framework.permission.AllowAny',
+    'rest_framework.permission.IsAuthenticateOrReadOnly'
+  }  
+}
+
+
+
 
 ROOT_URLCONF = 'Hospital_Management_System.urls'
 
