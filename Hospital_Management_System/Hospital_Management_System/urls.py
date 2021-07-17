@@ -28,7 +28,7 @@ urlpatterns = [
     path('api/',include(router.urls)), 
     #url for token genertion and refershtoken
     path('api/gettoken', TokenObtainPairView.as_view(), name ='gettoken'),
-	path('api/refresh_token', TokenObtainPairView.as_view(), name ='refresh_token').
-	path('api/companybyname/', CompanyNameViewSet.as_view(),name='companybyname')
+	path('api/refresh_token', TokenObtainPairView.as_view(), name ='refresh_token'),
+	path('api/companybyname/<str:pk>/', views.CompanyNameViewSet.as_view(),name='companybyname')
 
 ] 

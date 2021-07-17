@@ -7,11 +7,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response  import Response
-from rest_framework.generics import ListApiView
-# Create your view
-# class CompanyViewSet(viewsets.ViewSet):
-# 	quaryset = Company.objects.all()
-# 	serializer_class = CompanySerializer
+from rest_framework import generics
+
 
 class CompanyViewSet(viewsets.ViewSet):
 	authentication_classesj = (JWTAuthentication,)
@@ -103,9 +100,12 @@ class CompanyBankViewSet(viewsets.ViewSet):
 
 
 #filter by comapny name
-class CompanyNameViewSet(generics.ListApiView):
+class CompanyNameViewSet(generics.ListCreateAPIView):
+	authentication_classesj = [JWTAuthentication,]
+	permission_classes = [IsAuthenticated] 
+	serializer_class = CompanySerializer
 	def get_queryset(self):
-		name = self.kwagrs['name']
+		name = self.kwargs['pk']
 		return Company.objects.filter(name=name)
 
 	

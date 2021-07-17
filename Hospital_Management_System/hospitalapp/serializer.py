@@ -16,7 +16,3 @@ class ComapnyBankSerializer(serializers.ModelSerializer):
 		response = super().to_representation(instance)
 		response['company'] = CompanySerializer(instance.company_id).data
 		return response
-
-
-		
-		
