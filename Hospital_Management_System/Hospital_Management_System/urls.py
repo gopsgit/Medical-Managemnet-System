@@ -20,12 +20,15 @@ from hospitalapp import views
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 router = routers.DefaultRouter()
 router.register('company',views.CompanyViewSet, basename='company')
+router.register('companybank',views.CompanyBankViewSet, basename='companybank')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)), 
     #url for token genertion and refershtoken
     path('api/gettoken', TokenObtainPairView.as_view(), name ='gettoken'),
-	path('api/refresh_token', TokenObtainPairView.as_view(), name ='refresh_token')
+	path('api/refresh_token', TokenObtainPairView.as_view(), name ='refresh_token').
+	path('api/companybyname/', CompanyNameViewSet.as_view(),name='companybyname')
 
-]
+] 

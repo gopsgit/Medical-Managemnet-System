@@ -53,16 +53,6 @@ MIDDLEWARE = [
 ]
 
 
-REST_FRAMEWORK ={
-    'DEFAULT_AUTHENTICATION':[
-    'rest_framework_jwt.authentication.JsonWebTokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES':{
-    'rest_framework.permission.AllowAny',
-    'rest_framework.permission.IsAuthenticateOrReadOnly'
-  }  
-}
-
 
 
 
@@ -135,3 +125,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTTokenUserAuthentication',
+    )
+
+    
+
+}
+
+import datetime
+JWT_AUTH = {
+
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30000),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+
+}
