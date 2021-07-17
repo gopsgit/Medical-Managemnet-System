@@ -11,12 +11,13 @@ class Company(models.Model):
     email = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     added_on = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
 
 class Medicine(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    medical = models.CharField(max_length=255)
+    medical_type = models.CharField(max_length=255)
     buy_price = models.CharField(max_length=255)
     sell_price = models.CharField(max_length=255)
     c_gst = models.CharField(max_length=255)
@@ -30,6 +31,7 @@ class Medicine(models.Model):
     in_stock_total = models.IntegerField()
     qty_in_stripe = models.IntegerField()
     added_on = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
 class MedicalDetails(models.Model):
     id = models.AutoField(primary_key = True)
@@ -39,6 +41,7 @@ class MedicalDetails(models.Model):
     salt_qty_type = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     added_on = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
 class Employee(models.Model):
     id = models.AutoField(primary_key=True)
@@ -47,6 +50,7 @@ class Employee(models.Model):
     phone =  models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     added_on = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)

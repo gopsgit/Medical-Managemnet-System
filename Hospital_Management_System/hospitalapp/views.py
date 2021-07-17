@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializer import CompanySerializer
+from .serializer import CompanySerializer,MedicineSerializer
 from .serializer import ComapnyBankSerializer
-from .models import Company,CompanyBank
+
+from .models import Company,CompanyBank,Medicine
+
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated 
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -108,18 +110,75 @@ class CompanyNameViewSet(generics.ListCreateAPIView):
 		name = self.kwargs['pk']
 		return Company.objects.filter(name=name)
 
+
+
+class MedicineViewSet(viewsets.ViewSet):
+	# Authrisation and Authentications
+	authentication_classesj = (JWTAuthentication,)
+	permission_classes = [IsAuthenticated] 
+
+ # get all data of medicien
+	def list(self, request):
+		medicien = Medicine.objects.all()
+		serializer = MedicineSerializer(medicien,many=True,context={'request':request})
+		resp_dict ={'error':False, 'msg':'All medicien data','data':serializer.data}
+		return Response(resp_dict)
+
+# post medicien data
+	def create(self,request):
+		try:
+			serializer = MedicineSerializer(data=request.data,context={'request':request})
+			serializer.is_valid()
+			medicien_instance=serializer.save()
+			resp_dict = {'error':False, 'msg':'Medicine data cerate successfully'}
+		except Exception as e:
+			print('eeeeee',e)
+			resp_dict = {'error':False, 'msg':'error during saving data Medicine data '}
+		return Response(resp_dict)
+
+
+	def retrive(self,request,pk=None):
+		try:
+			quaryset = Medicine.objects.all()
+			company_bank = get_object_or_404(quaryset,pk=pk)
+			serializer = MedicineSerializer(data=request.data,context={'request':request})
+			resp_dict ={'error':False, 'msg':'Single Medicine data fetch successfully'}
+		except Exception as e:
+			print(e)
+			resp_dict ={'error':False, 'msg':'error during Single Medicine data fetch '}
+		return Response(resp_dict)
+
+
+# update medicien data
+	def update(self,request,pk=None):
+		try:
+			quaryset = Medicine.objects.all()
+			company = get_object_or_404(quaryset,pk=pk)
+			serializer = CompanySerializer(data=request.data,context={'request':request})
+			serializer.is_valid()
+			company_instance=serializer.save()
+			resp_dict ={'error':False, 'msg':'Medicine data update successfully'}
+		except Exception as e:
+			print(e)
+			resp_dict ={'error':False, 'msg':'error during update data Medicine '}
+		return Response(resp_dict)
 	
 
 
 
 
-
+# for company
 company_list = CompanyViewSet.as_view({'get':'list'})
 company_create = CompanyViewSet.as_view({'post':'create'})
 company_update = CompanyViewSet.as_view({'put':'update'})
+
 # for CompanyBank 
 company_bank_create = CompanyBankViewSet.as_view({'post':'create'})
 company_bank_list = CompanyViewSet.as_view({'get':'list'})
-company_bank_single = CompanyViewSet.as_view({'get':'list'})
 company__bank_update = CompanyViewSet.as_view({'put':'update'})
+
+#for medicien
+medicien_list = MedicineViewSet.as_view({'get':'list'})
+medicien_create = MedicineViewSet.as_view({'post':'create'})
+medicien_update = MedicineViewSet.as_view({'put':'update'})
 

@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 router = routers.DefaultRouter()
 router.register('company',views.CompanyViewSet, basename='company')
 router.register('companybank',views.CompanyBankViewSet, basename='companybank')
+router.register('medicien',views.MedicineViewSet, basename='medicien')
 
 
 urlpatterns = [
